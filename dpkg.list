@@ -1,0 +1,10 @@
+git
+autoconf
+automake
+libtool
+build-essential
+expect-lite
+libev-dev
+valgrind
+colordiff
+colormake
