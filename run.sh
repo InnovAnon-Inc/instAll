@@ -1,6 +1,9 @@
 #! /bin/bash
 set -exu
 
+[ -f reset ] ||
+touch reset
+
 if ! command -v dockerd ; then
 	command -v wget ||
 	apt install wget
