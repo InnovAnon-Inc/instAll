@@ -20,8 +20,8 @@ fi
 
 #sudo rm -fv /usr/local/lib/lib*.{so,la,a}*
 
-NC=0
-NSB=1
+NC=${NC:0}
+NSB=${NSB:1}
 
 while [ ${#libs[@]} -ne 0 ] ; do
    for N in `seq ${#libs[@]}` ; do
@@ -30,7 +30,7 @@ while [ ${#libs[@]} -ne 0 ] ; do
    libs=(${libs[@]:1})
    L=(/usr/local/lib/lib${k,,}.{so,a})
    [ ! -e ${L[0]} -o ! -e ${L[0]} ] || continue
-   if [ -d $k ] && $NC ; then (
+   if [ -d $k ] && [ $NC -ne 0 ] ; then (
       set -exu
       cd $k
       git reset --hard
@@ -49,14 +49,15 @@ while [ ${#libs[@]} -ne 0 ] ; do
       cd $k
       K=$PWD
       nice -n +20 ./autogen.sh
-      if $NSB ; then
+      if [ $NSB -ne 0 ] ; then
          rm -rf   ../build
          mkdir -v ../build
          cd       ../build
       fi
       nice -n +20 $K/configure
       nice -n +20 make
-      nice -n +20 make install
+      [ `command -v sudo` ] && nice -n +20 sudo make install || nice -n +20 make install
+      #nice -n +20 sudo make install
    #) |& unbuffer -p tee $k.log && rm -v $k.log || libs+=($k)
    #) |& unbuffer -p tee $k.log && rm -v $k.log || (cat $k.log ; echo $k ; exit 123)
    ) |& unbuffer -p tee $k.log && rm -v $k.log || if [ $# -eq 0 ] ; then libs+=($k) ; else (cat $k.log ; echo $k ; exit 123) ; fi
