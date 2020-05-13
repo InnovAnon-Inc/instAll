@@ -5,9 +5,11 @@ if [ $# -ne 0 ] ; then libs=($@) ; else
 # correctly ordering the dependencies is optional,
 # but will cause the loops to iterate fewer times,
 # significantly decreasing this script's run time
-libs=(glitter restart)
+#libs=(glitter restart)
+libs=(glitter iSqrt restart)
 libs+=(ezfork SFork DFork)
-libs+=(iSqrt kahan ZePaSt MultiMalloc swap)
+#libs+=(iSqrt kahan ZePaSt MultiMalloc swap)
+libs+=(kahan ZePaSt MultiMalloc swap)
 libs+=(C-Thread-Pool)
 libs+=(StD Array PArray DArr)
 libs+=(CAQ CPAQ TSCPAQ CHeap SLL)
