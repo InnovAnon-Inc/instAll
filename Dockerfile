@@ -38,11 +38,11 @@ COPY innovanon-inc-c.sh .
 COPY reset .
 RUN [ ${OPT4SZ} -eq 0 ] || ./innovanon-inc.c.sh
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh glitter
+RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh iSqrt
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh restart
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh ezfork
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh SFork
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh DFork
-RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh iSqrt
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh kahan
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh ZePaSt
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh MultiMalloc
