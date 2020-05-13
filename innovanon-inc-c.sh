@@ -22,7 +22,10 @@ fi
 
 #sudo rm -fv /usr/local/lib/lib*.{so,la,a}*
 
+# default is to clobber
 NC=${NC:=0}
+# default is to not use a separate build directory
+# ...because my dependency-tracking hacks broke that feature
 NSB=${NSB:=1}
 
 while [ ${#libs[@]} -ne 0 ] ; do
@@ -50,7 +53,7 @@ while [ ${#libs[@]} -ne 0 ] ; do
       cd $k
       K=$PWD
       nice -n +20 ./autogen.sh
-      if [ $NSB -ne 0 ] ; then
+      if [ $NSB -eq 0 ] ; then
          rm -rf   ../build
          mkdir -v ../build
          cd       ../build
@@ -67,4 +70,4 @@ while [ ${#libs[@]} -ne 0 ] ; do
    done
    [ $N -ne ${#libs[@]} ] || break
 done
-[ $NSB -ne 0 ] || rm -rf build
+[ $NSB -eq 0 ] || rm -rf build
