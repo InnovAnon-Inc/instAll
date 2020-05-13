@@ -20,8 +20,8 @@ fi
 
 #sudo rm -fv /usr/local/lib/lib*.{so,la,a}*
 
-NC=${NC:0}
-NSB=${NSB:1}
+NC=${NC:=0}
+NSB=${NSB:=1}
 
 while [ ${#libs[@]} -ne 0 ] ; do
    for N in `seq ${#libs[@]}` ; do
@@ -37,9 +37,8 @@ while [ ${#libs[@]} -ne 0 ] ; do
       git clean -f -d -x
       git clean -f -d -x
       git pull origin master
-   ) ; elif [ -d $k ] ; then
+   ) ; else
       rm -rf $k
-   else
       git clone --depth=1 https://github.com/InnovAnon-Inc/$k
    fi
       
