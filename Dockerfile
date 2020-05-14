@@ -35,7 +35,7 @@ RUN mkdir -pv ${B}/src
 WORKDIR ${B}/src
 
 COPY innovanon-inc-c.sh .
-COPY reset .
+COPY reset* ./
 RUN [ ${OPT4SZ} -eq 0 ] || ./innovanon-inc.c.sh
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh glitter
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh iSqrt
