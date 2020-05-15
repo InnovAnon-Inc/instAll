@@ -57,6 +57,7 @@ RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh CPAQ
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh TSCPAQ
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh CHeap
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh SLL
+RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh network
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh ezudp
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh eztcp
 RUN [ ${OPT4SZ} -ne 0 ] || ./innovanon-inc-c.sh EZIO
