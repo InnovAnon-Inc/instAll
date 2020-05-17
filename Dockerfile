@@ -1,5 +1,6 @@
 # Use the official image as a parent image.
 FROM poobuntu:latest
+MAINTAINER Innovations Anonymous <InnovAnon-Inc@protonmail.com>
 
 LABEL version="1.0"
 LABEL maintainer="Innovations Anonymous <InnovAnon-Inc@protonmail.com>"
