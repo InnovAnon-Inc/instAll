@@ -1,14 +1,16 @@
 #! /bin/bash
 set -exu
 
+DIR=$PWD
+
 if [ `command -v sudo` ] ; then
 SUDO=sudo
 else
 SUDO=
 fi
-[ -d /tmp/build ] ||
-$SUDO mkdir      /tmp/build
-$SUDO chmod a+wt /tmp/build
+[ -d $DIR/build ] ||
+$SUDO mkdir      $DIR/build
+$SUDO chmod a+wt $DIR/build
 
 if [ $# -ne 0 ] ; then libs=($@) ; else
 # correctly ordering the dependencies is optional,
@@ -81,23 +83,23 @@ cleanversion=${projectversion%%-*}
 VERSION="$cleanversion.$revisioncount"
 #VERSION=1.0.1
 
-rm -rf    /tmp/build/${PACKAGE}/${VERSION}
-mkdir -pv /tmp/build/${PACKAGE}/${VERSION}
+rm -rf    $DIR/build/${PACKAGE}/${VERSION}
+mkdir -pv $DIR/build/${PACKAGE}/${VERSION}
 git archive --format=tar --prefix=${PACKAGE}-${VERSION}/ master | \
 xz -c1                                                          > \
-          /tmp/build/${PACKAGE}/${VERSION}/${PACKAGE}-${VERSION}.tar.xz
-cd        /tmp/build/${PACKAGE}/${VERSION}
+          $DIR/build/${PACKAGE}/${VERSION}/${PACKAGE}-${VERSION}.tar.xz
+cd        $DIR/build/${PACKAGE}/${VERSION}
 tar xf    ${PACKAGE}-${VERSION}.tar.xz
 cd        ${PACKAGE}-${VERSION}
 
 ./autogen.sh
 if [ $NSB -eq 0 ] ; then
-  rm -rf   /tmp/build-${PACKAGE}
-  mkdir -v /tmp/build-${PACKAGE}
-  cd       /tmp/build-${PACKAGE}
+  rm -rf   $DIR/build-${PACKAGE}
+  mkdir -v $DIR/build-${PACKAGE}
+  cd       $DIR/build-${PACKAGE}
 fi
 
-/tmp/build/${PACKAGE}/${VERSION}/${PACKAGE}-${VERSION}/configure
+$DIR/build/${PACKAGE}/${VERSION}/${PACKAGE}-${VERSION}/configure
 make
 
 DEBFULLNAME='InnovAnon, Inc. (Ministries)'        \
@@ -131,7 +133,7 @@ dpkg-buildpackage         \
 $SUDO dpkg -i ${PACKAGE}_${VERSION}-1_amd64.deb
 
 if [ $NSB -eq 0 ] ; then
-  rm -rf /tmp/build-${PACKAGE}
+  rm -rf $DIR/build-${PACKAGE}
 fi
 
 
