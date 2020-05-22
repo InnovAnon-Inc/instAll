@@ -20,5 +20,6 @@ sudo             -- \
 nice -n -20      -- \
 sudo -u `whoami` -- \
 docker build -t install-all .
+docker push innovanon/install:latest || :
 docker run   -t install-all
 
