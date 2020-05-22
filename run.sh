@@ -17,9 +17,14 @@ docker version ||
 dockerd &
 
 sudo             -- \
-nice -n -20      -- \
+nice -n +20      -- \
 sudo -u `whoami` -- \
-docker build -t install-all .
-docker push innovanon/install:latest || :
-docker run   -t install-all
+docker build -t innovanon/install-all .
+
+docker push innovanon/install-all:latest || :
+
+sudo             -- \
+nice -n +20      -- \
+sudo -u `whoami` -- \
+docker run   -t innovanon/install-all
 
