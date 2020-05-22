@@ -83,10 +83,10 @@ RUN rm -v innovanon-inc-c.sh
 
 WORKDIR /
 
-RUN apt-mark manual libev4
-RUN apt-fast purge `grep -v '^[\^#]' dpkg.list`
-RUN ./poobuntu-clean.sh
-RUN rm -v dpkg.list
+RUN apt-mark manual libev4                      \
+ && apt-fast purge `grep -v '^[\^#]' dpkg.list` \
+ && ./poobuntu-clean.sh                         \
+ && rm -v dpkg.list
 
 CMD ! command -v /bin/laden || /bin/laden && if [ -n "`find ${B}/src -mindepth 1 -maxdepth 1 -name '*.log' -print -quit`" ] ; then ls ${B}/src/*.log && cat ${B}/src/*.log ; fi
 
