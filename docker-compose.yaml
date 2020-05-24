@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+  instAll:
+    #build: .
+    build:
+      context: .
+      args:
+        - OPT4SZ=0
+    hostname: instAll
+    #environment:
+    #  - OPT4SZ=0
+    image: innovanon/instAll:latest
+    container_name: innovanon/instAll
+

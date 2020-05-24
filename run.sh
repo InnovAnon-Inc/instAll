@@ -1,21 +1,23 @@
 #! /bin/bash
 set -exu
-
-[[ -f reset ]] ||
-touch reset
+cd "`dirname "$(readlink -f "$0")"`"
 
 command -v docker ||
 curl https://raw.githubusercontent.com/InnovAnon-Inc/repo/master/get-docker.sh | bash
 
-sudo             -- \
-nice -n +20      -- \
-sudo -u `whoami` -- \
-docker build -t innovanon/install-all .
+[[ -f reset ]] ||
+touch reset
 
-docker push innovanon/install-all:latest || :
+trap 'docker-compose down' 0
 
 sudo             -- \
 nice -n +20      -- \
 sudo -u `whoami` -- \
-docker run   -t innovanon/install-all
+docker-compose up --build --force-recreate
+
+docker-compose push
+( #git pull
+git add .
+git commit -m "auto commit by $0"
+git push ) || :
 
