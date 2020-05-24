@@ -9,4 +9,5 @@ Install All InnovAnon, Inc. (Ministries) C libraries and applications
 # Bonus (forgo Docker and do it on the bare metal)
 `cd .. && instAll/innovanon-inc-c.sh`
 
-`wget -O- https://raw.githubusercontent.com/InnovAnon-Inc/instAll/master/innovanon-inc-c.sh | bash`
+`pcurl https://raw.githubusercontent.com/InnovAnon-Inc/instAll/master/innovanon-inc-c.sh | bash`
+

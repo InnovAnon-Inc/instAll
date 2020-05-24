@@ -3,16 +3,16 @@ set -exu
 
 DIR=$PWD
 
-if [ `command -v sudo` ] ; then
+if command -v sudo ; then
 SUDO=sudo
 else
 SUDO=
 fi
-[ -d $DIR/build ] ||
+[[ -d $DIR/build ]] ||
 $SUDO mkdir      $DIR/build
 $SUDO chmod a+wt $DIR/build
 
-if [ $# -ne 0 ] ; then libs=($@) ; else
+if [[ $# -ne 0 ]] ; then libs=($@) ; else
 # correctly ordering the dependencies is optional,
 # but will cause the loops to iterate fewer times,
 # significantly decreasing this script's run time
@@ -40,15 +40,15 @@ NC=${NC:=0}
 NSB=${NSB:=1}
 #NSB=${NSB:=0}
 
-while [ ${#libs[@]} -ne 0 ] ; do
+while [[ ${#libs[@]} -ne 0 ]] ; do
    for N in `seq ${#libs[@]}` ; do
 
    k=${libs[0]}
 PACKAGE=${k,,}
    libs=(${libs[@]:1})
    L=(/usr/local/lib/lib$PACKAGE.{so,a})
-   [ ! -e ${L[0]} -o ! -e ${L[0]} ] || continue
-   if [ -d $k ] && [ $NC -ne 0 ] ; then (
+   [[ ! -e ${L[0]} ]] || [[ ! -e ${L[0]} ]] || continue
+   if [[ -d $k ]] && [[ $NC -ne 0 ]] ; then (
       set -exu
       cd $k
       git reset --hard
@@ -66,7 +66,7 @@ PACKAGE=${k,,}
       cd $k
       K=$PWD
 
-if [ -z `git tag` ] ; then
+if [[ -z "`git tag`" ]] ; then
   git tag 1.0
   git add .
   git commit -m tagged
@@ -93,7 +93,7 @@ tar xf    ${PACKAGE}-${VERSION}.tar.xz
 cd        ${PACKAGE}-${VERSION}
 
 ./autogen.sh
-if [ $NSB -eq 0 ] ; then
+if [[ $NSB -eq 0 ]] ; then
   rm -rf   $DIR/build-${PACKAGE}
   mkdir -v $DIR/build-${PACKAGE}
   cd       $DIR/build-${PACKAGE}
@@ -132,7 +132,7 @@ dpkg-buildpackage         \
 
 $SUDO dpkg -i ${PACKAGE}_${VERSION}-1_amd64.deb
 
-if [ $NSB -eq 0 ] ; then
+if [[ $NSB -eq 0 ]] ; then
   rm -rf $DIR/build-${PACKAGE}
 fi
 
@@ -140,21 +140,21 @@ fi
 
 
 #      nice -n +20 ./autogen.sh
-#      if [ $NSB -eq 0 ] ; then
+#      if [[ $NSB -eq 0 ]] ; then
 #         rm -rf   ../build
 #         mkdir -v ../build
 #         cd       ../build
 #      fi
 #      nice -n +20 $K/configure
 #      nice -n +20 make
-#      [ `command -v sudo` ] && nice -n +20 sudo make install || nice -n +20 make install
+#      command -v sudo && nice -n +20 sudo make install || nice -n +20 make install
       #nice -n +20 sudo make install
    #) |& unbuffer -p tee $k.log && rm -v $k.log || libs+=($k)
    #) |& unbuffer -p tee $k.log && rm -v $k.log || (cat $k.log ; echo $k ; exit 123)
-   ) |& unbuffer -p tee $k.log && rm -v $k.log || if [ $# -eq 0 ] ; then libs+=($k) ; else (cat $k.log ; echo $k ; exit 123) ; fi
+   ) |& unbuffer -p tee $k.log && rm -v $k.log || if [[ $# -eq 0 ]] ; then libs+=($k) ; else (cat $k.log ; echo $k ; exit 123) ; fi
    set +o pipefail
 
    done
-   [ $N -ne ${#libs[@]} ] || break
+   [[ $N -ne ${#libs[@]} ]] || break
 done
-#[ $NSB -eq 0 ] || rm -rf build
+#[[ $NSB -eq 0 ]] || rm -rf build
