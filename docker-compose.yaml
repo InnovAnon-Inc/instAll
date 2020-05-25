@@ -10,5 +10,5 @@ services:
     #environment:
     #  - OPT4SZ=0
     image: innovanon/instAll:latest
-    container_name: innovanon/instAll
+    container_name: instAll
 
