@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 set -exu
 
 DIR=$PWD
@@ -40,7 +40,7 @@ NC=${NC:=0}
 NSB=${NSB:=1}
 #NSB=${NSB:=0}
 
-while [[ ${#libs[@]} -ne 0 ]] ; do
+while (( ${#libs[@]} == 0 )) ; do
    for N in `seq ${#libs[@]}` ; do
 
    k=${libs[0]}
@@ -48,7 +48,7 @@ PACKAGE=${k,,}
    libs=(${libs[@]:1})
    L=(/usr/local/lib/lib$PACKAGE.{so,a})
    [[ ! -e ${L[0]} ]] || [[ ! -e ${L[0]} ]] || continue
-   if [[ -d $k ]] && [[ $NC -ne 0 ]] ; then (
+   if [[ -d $k ]] && (( $NC != 0 )) ; then (
       set -exu
       cd $k
       git reset --hard
@@ -93,7 +93,7 @@ tar xf    ${PACKAGE}-${VERSION}.tar.xz
 cd        ${PACKAGE}-${VERSION}
 
 ./autogen.sh
-if [[ $NSB -eq 0 ]] ; then
+if (( $NSB == 0 )) ; then
   rm -rf   $DIR/build-${PACKAGE}
   mkdir -v $DIR/build-${PACKAGE}
   cd       $DIR/build-${PACKAGE}
@@ -132,7 +132,7 @@ dpkg-buildpackage         \
 
 $SUDO dpkg -i ${PACKAGE}_${VERSION}-1_amd64.deb
 
-if [[ $NSB -eq 0 ]] ; then
+if (( $NSB == 0 )) ; then
   rm -rf $DIR/build-${PACKAGE}
 fi
 
@@ -151,10 +151,10 @@ fi
       #nice -n +20 sudo make install
    #) |& unbuffer -p tee $k.log && rm -v $k.log || libs+=($k)
    #) |& unbuffer -p tee $k.log && rm -v $k.log || (cat $k.log ; echo $k ; exit 123)
-   ) |& unbuffer -p tee $k.log && rm -v $k.log || if [[ $# -eq 0 ]] ; then libs+=($k) ; else (cat $k.log ; echo $k ; exit 123) ; fi
+   ) |& unbuffer -p tee $k.log && rm -v $k.log || if (( $# == 0 )) ; then libs+=($k) ; else (cat $k.log ; echo $k ; exit 123) ; fi
    set +o pipefail
 
    done
-   [[ $N -ne ${#libs[@]} ]] || break
+   (( $N != ${#libs[@]} )) || break
 done
 #[[ $NSB -eq 0 ]] || rm -rf build
