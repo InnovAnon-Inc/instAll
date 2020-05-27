@@ -1,5 +1,5 @@
 # instAll
-=====
+==========
 
 ![Docker](https://github.com/InnovAnon-Inc/instAll/workflows/Docker/badge.svg)
 
