@@ -1,4 +1,10 @@
 # instAll
+=====
+
+![Docker](https://github.com/InnovAnon-Inc/instAll/workflows/Docker/badge.svg)
+
+[![dockeri.co](https://dockeri.co/image/innovanon/install-all)](https://hub.docker.com/r/innovanon/install-all/)
+
 Install All InnovAnon, Inc. (Ministries) C libraries and applications
 
 # Usage
