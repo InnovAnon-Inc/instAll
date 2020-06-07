@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 set -exu
+(( ! $# ))
+
 cd "`dirname "$(readlink -f "$0")"`"
 
 command -v docker ||
@@ -12,7 +14,7 @@ trap 'docker-compose down' 0
 
 sudo             -- \
 nice -n +20      -- \
-sudo -u `whoami` -- \
+sudo -u "$USER" -- \
 docker-compose up --build --force-recreate
 
 docker-compose push

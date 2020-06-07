@@ -40,7 +40,7 @@ NC=${NC:=0}
 NSB=${NSB:=1}
 #NSB=${NSB:=0}
 
-while (( ${#libs[@]} == 0 )) ; do
+while (( ! ${#libs[@]} )) ; do
    for N in `seq ${#libs[@]}` ; do
 
    k=${libs[0]}
@@ -93,7 +93,7 @@ tar xf    ${PACKAGE}-${VERSION}.tar.xz
 cd        ${PACKAGE}-${VERSION}
 
 ./autogen.sh
-if (( $NSB == 0 )) ; then
+if (( ! $NSB )) ; then
   rm -rf   $DIR/build-${PACKAGE}
   mkdir -v $DIR/build-${PACKAGE}
   cd       $DIR/build-${PACKAGE}
@@ -132,7 +132,7 @@ dpkg-buildpackage         \
 
 $SUDO dpkg -i ${PACKAGE}_${VERSION}-1_amd64.deb
 
-if (( $NSB == 0 )) ; then
+if (( ! $NSB )) ; then
   rm -rf $DIR/build-${PACKAGE}
 fi
 
@@ -151,7 +151,7 @@ fi
       #nice -n +20 sudo make install
    #) |& unbuffer -p tee $k.log && rm -v $k.log || libs+=($k)
    #) |& unbuffer -p tee $k.log && rm -v $k.log || (cat $k.log ; echo $k ; exit 123)
-   ) |& unbuffer -p tee $k.log && rm -v $k.log || if (( $# == 0 )) ; then libs+=($k) ; else (cat $k.log ; echo $k ; exit 123) ; fi
+   ) |& unbuffer -p tee $k.log && rm -v $k.log || if (( ! $# )) ; then libs+=($k) ; else (cat $k.log ; echo $k ; exit 123) ; fi
    set +o pipefail
 
    done
